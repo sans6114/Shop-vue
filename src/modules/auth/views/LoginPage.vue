@@ -59,7 +59,7 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref } from 'vue'
+import { reactive, ref, watchEffect } from 'vue'
 
 import { useToast } from 'vue-toastification'
 
@@ -102,4 +102,12 @@ const onLogin = async () => {
 
   console.log(ok)
 }
+
+watchEffect(() => {
+  const email = localStorage.getItem('email')
+  if (email) {
+    myForm.email = email
+    myForm.remember = true
+  }
+})
 </script>
