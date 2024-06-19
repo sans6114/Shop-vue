@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
+import { adminRoutes } from '@/modules/admin/routes'
 import { authRoutes } from '@/modules/auth/routes'
 import ShopLayout from '@/modules/shop/layouts/ShopLayout.vue'
 import { HomeView } from '@/modules/shop/views'
@@ -20,7 +21,9 @@ const router = createRouter({
       ]
     },
     //auth routes
-    authRoutes
+    authRoutes,
+    //admin routes
+    adminRoutes
   ]
 })
 

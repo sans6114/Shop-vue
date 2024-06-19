@@ -45,6 +45,7 @@ export const useAuthStore = defineStore('auth', () => {
       user.value = responseLogin.user
       token.value = responseLogin.token
       authStatus.value = AuthStatus.Autenticado
+      console.log(user.value)
       return true
     } catch (error) {
       return logOut()
@@ -59,7 +60,7 @@ export const useAuthStore = defineStore('auth', () => {
         logOut()
         return false
       }
-      authStatus.value === AuthStatus.Autenticado
+      authStatus.value = AuthStatus.Autenticado
       // si no entro en el if anterior va a significar que el token es valido por lo que:
       user.value = response.user
       token.value = response.token
@@ -74,6 +75,7 @@ export const useAuthStore = defineStore('auth', () => {
     authStatus.value === AuthStatus.NoAutenticado
     user.value = undefined
     token.value = ''
+    console.log('usuario cerrado')
     return false
   }
 
@@ -87,7 +89,7 @@ export const useAuthStore = defineStore('auth', () => {
     isCheking: computed(() => authStatus.value === AuthStatus.Checking),
     siAutenticado: computed(() => authStatus.value === AuthStatus.Autenticado),
     noAutenticado: computed(() => authStatus.value === AuthStatus.NoAutenticado),
-
+    isAdmin: computed(() => user.value?.roles.includes('admin') ?? false),
     //TODO: adm o no
 
     // setters
@@ -96,6 +98,7 @@ export const useAuthStore = defineStore('auth', () => {
     //actions
     login,
     register,
-    statusCheck
+    statusCheck,
+    logOut
   }
 })
