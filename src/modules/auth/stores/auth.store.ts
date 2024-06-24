@@ -72,6 +72,9 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   const logOut = () => {
+    //En el logout faltaba borrar el token en el localstorage
+    localStorage.removeItem('token')
+
     authStatus.value === AuthStatus.NoAutenticado
     user.value = undefined
     token.value = ''

@@ -10,7 +10,14 @@ const isAuthenticatedGuard = async (
 ) => {
   const authStore = useAuthStore()
 
-  await authStore.statusCheck()
+  //! Podemos obtener el resultado del estado de autenticación
+  const isAuthenticated = await authStore.statusCheck()
+
+  if (isAuthenticated) {
+    next()
+  } else {
+    next({ name: 'home' })
+  }
 
   authStore.authStatus === AuthStatus.NoAutenticado ? next({ name: 'home' }) : next()
 }
