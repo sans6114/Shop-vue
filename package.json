@@ -22,9 +22,11 @@
     "flowbite": "^2.3.0",
     "pinia": "^2.1.7",
     "rimraf": "^5.0.7",
+    "vee-validate": "^4.13.1",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0",
-    "vue-toastification": "^2.0.0-rc.5"
+    "vue-toastification": "^2.0.0-rc.5",
+    "yup": "^1.4.0"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.8.0",
@@ -39,6 +41,7 @@
     "autoprefixer": "^10.4.19",
     "daisyui": "^4.12.2",
     "eslint": "^8.57.0",
+    "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-vue": "^9.23.0",
     "jsdom": "^24.0.0",
     "npm-run-all2": "^6.1.2",
