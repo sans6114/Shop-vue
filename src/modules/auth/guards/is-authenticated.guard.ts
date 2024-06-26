@@ -10,7 +10,13 @@ const isAuthenticatedGuard = async (
 ) => {
   const authStore = useAuthStore()
 
-  await authStore.statusCheck()
+  const isAuthenticated = await authStore.statusCheck()
+
+  if (isAuthenticated) {
+    next()
+  } else {
+    next({ name: 'home' })
+  }
 
   authStore.authStatus === AuthStatus.NoAutenticado ? next({ name: 'home' }) : next()
 }

@@ -1,5 +1,6 @@
 import './assets/main.css'
 import 'vue-toastification/dist/index.css'
+import './config/Yup'
 
 import { createApp } from 'vue'
 

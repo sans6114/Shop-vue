@@ -4,7 +4,7 @@
   <!-- component -->
   <div class="flex w-screen h-screen text-gray-700">
     <!-- Component Start -->
-    <div class="flex flex-col items-center w-16 pb-4 overflow-auto border-r border-gray-300">
+    <div class="flex flex-col items-center w-[100px] pb-4 overflow-auto border-r border-gray-300">
       <a class="flex items-center justify-center flex-shrink-0 w-full h-16 bg-gray-300" href="#">
         <svg
           class="w-8 h-8"
@@ -186,7 +186,7 @@
           </div>
         </button>
       </div>
-      <div class="flex-grow p-6 overflow-auto bg-gray-200">
+      <div class="flex-grow p-6 overflow-auto bg-gray-200 flex-1">
         <router-view></router-view>
       </div>
     </div>
