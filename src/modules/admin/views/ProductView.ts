@@ -6,9 +6,10 @@ import * as yup from 'yup'
 import CustomInput from '@/modules/common/components/CustomInput.vue'
 import CustomSelect from '@/modules/common/components/CustomSelect.vue'
 import CustomTextArea from '@/modules/common/components/CustomTextArea.vue'
+import { updateProductAction } from '@/modules/products/actions'
 import { getProductById } from '@/modules/products/actions/get-product-by-id.action'
 import router from '@/router'
-import { useQuery } from '@tanstack/vue-query'
+import { useMutation, useQuery } from '@tanstack/vue-query'
 
 const validationSchema = yup.object({
   title: yup.string().required().min(3),
@@ -33,7 +34,7 @@ export default defineComponent({
     }
   },
 
-  setup(props) {
+  async setup(props) {
     console.log(props)
 
     const {
@@ -44,6 +45,12 @@ export default defineComponent({
       queryKey: ['product', props.productId],
       queryFn: () => getProductById(props.productId),
       retry: false
+    })
+
+    //mutations
+
+    const { mutate, isPending, isSuccess, data } = useMutation({
+      mutationFn: updateProductAction
     })
 
     //valores del formulario
@@ -71,8 +78,8 @@ export default defineComponent({
       push: pushSize
     } = useFieldArray<string>('sizes')
 
-    const onSubmit = handleSubmit((value) => {
-      console.log(value)
+    const onSubmit = handleSubmit((values) => {
+      mutate(values)
     })
     const toggleSize = (size: string) => {
       const currentSizes = sizesField.value.map((size) => size.value)
