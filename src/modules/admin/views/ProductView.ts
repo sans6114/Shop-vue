@@ -1,15 +1,17 @@
 import { defineComponent, watch, watchEffect } from 'vue'
 
 import { useFieldArray, useForm } from 'vee-validate'
+import { useToast } from 'vue-toastification'
 import * as yup from 'yup'
 
 import CustomInput from '@/modules/common/components/CustomInput.vue'
 import CustomSelect from '@/modules/common/components/CustomSelect.vue'
 import CustomTextArea from '@/modules/common/components/CustomTextArea.vue'
-import { updateProductAction } from '@/modules/products/actions'
 import { getProductById } from '@/modules/products/actions/get-product-by-id.action'
 import router from '@/router'
 import { useMutation, useQuery } from '@tanstack/vue-query'
+
+import { updateProductAction } from '../../products/actions/create-update-product.action'
 
 const validationSchema = yup.object({
   title: yup.string().required().min(3),
@@ -34,13 +36,13 @@ export default defineComponent({
     }
   },
 
-  async setup(props) {
-    console.log(props)
-
+  setup(props) {
+    const toast = useToast()
     const {
       data: product,
       isError,
-      isLoading
+      isLoading,
+      refetch
     } = useQuery({
       queryKey: ['product', props.productId],
       queryFn: () => getProductById(props.productId),
@@ -49,7 +51,12 @@ export default defineComponent({
 
     //mutations
 
-    const { mutate, isPending, isSuccess, data } = useMutation({
+    const {
+      mutate,
+      isPending,
+      isSuccess: isUpdateSuccess,
+      data: updateProduct
+    } = useMutation({
       mutationFn: updateProductAction
     })
 
@@ -78,7 +85,7 @@ export default defineComponent({
       push: pushSize
     } = useFieldArray<string>('sizes')
 
-    const onSubmit = handleSubmit((values) => {
+    const onSubmit = handleSubmit(async (values) => {
       mutate(values)
     })
     const toggleSize = (size: string) => {
@@ -113,6 +120,29 @@ export default defineComponent({
         immediate: true
       }
     )
+
+    //que el usuaroio vea que la actualizacion del producto fue correcta
+    watch(isUpdateSuccess, (value) => {
+      //si value es false no hago nada
+
+      if (!value) return
+
+      toast.success('¡Cambio en el producto realizado correctamente!')
+      router.replace(`admin/products/${updateProduct.value!.id}`)
+      //TODO: redirección cuando se crea
+
+      resetForm({
+        values: updateProduct.value
+      })
+    })
+
+    //que pasa si toco 'neuvo' en product view
+    watch(
+      () => props.productId,
+      () => {
+        refetch()
+      }
+    )
     return {
       //properties
       values,
@@ -132,6 +162,7 @@ export default defineComponent({
       imagesField,
       sizesField,
       meta,
+      isPending,
       //Getters
       allSizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
 

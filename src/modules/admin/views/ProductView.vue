@@ -14,20 +14,20 @@
         <label for="title" class="form-label">Título</label>
         <CustomInput v-model="title" v-bind="titleAttrs" :error="errors.title" />
         <!--
-        <input
-          v-model="title"
-          v-bind="titleAttrs"
-          type="text"
-          id="title"
-          :class="[
-            'form-control',
-            {
-              'border-red-500': errors.title
-            }
-          ]"
-        />
-        <span class="text-red-500 font-semibold" v-if="errors.title">{{ errors.title }}</span>
-        -->
+          <input
+            v-model="title"
+            v-bind="titleAttrs"
+            type="text"
+            id="title"
+            :class="[
+              'form-control',
+              {
+                'border-red-500': errors.title
+              }
+            ]"
+          />
+          <span class="text-red-500 font-semibold" v-if="errors.title">{{ errors.title }}</span>
+          -->
       </div>
 
       <div class="mb-4">
@@ -100,8 +100,9 @@
       <!-- Botón para guardar -->
       <div class="my-4 text-right">
         <button
+          :disabled="isPending"
           type="submit"
-          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          class="disabled:bg-gray-200 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
         >
           Guardar
         </button>
