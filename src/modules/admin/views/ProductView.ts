@@ -1,4 +1,4 @@
-import { defineComponent, watch, watchEffect } from 'vue'
+import { defineComponent, ref, watch, watchEffect } from 'vue'
 
 import { useFieldArray, useForm } from 'vee-validate'
 import { useToast } from 'vue-toastification'
@@ -85,9 +85,30 @@ export default defineComponent({
       push: pushSize
     } = useFieldArray<string>('sizes')
 
+    const imagesFile = ref<File[]>([])
+
     const onSubmit = handleSubmit(async (values) => {
-      mutate(values)
+      const formValues = {
+        ...values,
+        images: [...values.images, ...imagesFile.value]
+      }
+
+      mutate(formValues)
     })
+
+    const onFileChange = (event: Event) => {
+      const inputValue = event.target as HTMLInputElement
+
+      const filesOfInput = inputValue.files
+
+      if (!filesOfInput) return
+      if (filesOfInput.length === 0) return
+
+      for (const imageFile of filesOfInput) {
+        imagesFile.value.push(imageFile)
+      }
+    }
+
     const toggleSize = (size: string) => {
       const currentSizes = sizesField.value.map((size) => size.value)
 
@@ -163,16 +184,21 @@ export default defineComponent({
       sizesField,
       meta,
       isPending,
+      imagesFile,
       //Getters
       allSizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
 
       //actions
       onSubmit,
       toggleSize,
+      onFileChange,
 
       hasSize: (size: string) => {
         const currentSize = sizesField.value.map((size) => size.value)
         return currentSize.includes(size)
+      },
+      temporalImageUrl: (imageFile: File) => {
+        return URL.createObjectURL(imageFile)
       }
     }
   }

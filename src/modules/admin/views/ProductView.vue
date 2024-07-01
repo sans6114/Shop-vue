@@ -84,12 +84,28 @@
         <div v-for="image of imagesField" :key="image.value" class="flex-shrink-0">
           <img :src="image.value" :alt="title" class="w-[250px] h-[250px] rounded-xl" />
         </div>
+
+        <div v-for="imageNew of imagesFile" :key="imageNew.name" class="flex-shrink-0">
+          <img
+            :src="temporalImageUrl(imageNew)"
+            :alt="title"
+            class="w-full h-full rounded-xl object-cover"
+          />
+        </div>
       </div>
+
       <!-- Upload image -->
       <div class="col-span-2 my-2">
         <label for="image" class="form-label">Subir imagen</label>
 
-        <input multiple type="file" id="image" class="form-control" />
+        <input
+          multiple
+          type="file"
+          id="image"
+          class="form-control"
+          accept="image/*"
+          @change="onFileChange"
+        />
       </div>
 
       <div class="mb-4">
