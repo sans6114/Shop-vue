@@ -1,6 +1,6 @@
-import { tesloApi } from '@/api/tesloApi'
+import { tesloApi } from '@/api/tesloApi';
 
-import type { Product } from '../interfaces/productsInterface'
+import type { Product } from '../interfaces/productsInterface';
 
 export const updateProductAction = async (productLike: Partial<Product>) => {
   const productId = productLike.id
@@ -63,7 +63,7 @@ const createProduct = async (productLike: Partial<Product>) => {
 
 //upload new image
 
-const uploadImage = async (ImageFile: string[] | File[]) => {
+const uploadImage = async (ImageFile: (string | File)[]) => {
   const filesToUpload = ImageFile.filter((image) => image instanceof File) as File[]
 
   const imagesString = ImageFile.filter((image) => typeof image === 'string') as string[]
@@ -74,11 +74,12 @@ const uploadImage = async (ImageFile: string[] | File[]) => {
 
       formData.append('file', file)
 
-      const { data } = await tesloApi.post<{ secureUrl: string }>('files/product', formData)
+      const { data } = await tesloApi.post<{ secureUrl: string }>('/files/product', formData)
 
       return data.secureUrl
     } catch (error) {
       alert(error)
+      return ''
     }
   })
 

@@ -1,17 +1,32 @@
-import { defineComponent, ref, watch, watchEffect } from 'vue'
+import {
+  defineComponent,
+  ref,
+  watch,
+  watchEffect,
+} from 'vue';
 
-import { useFieldArray, useForm } from 'vee-validate'
-import { useToast } from 'vue-toastification'
-import * as yup from 'yup'
+import {
+  useFieldArray,
+  useForm,
+} from 'vee-validate';
+import { useToast } from 'vue-toastification';
+import * as yup from 'yup';
 
-import CustomInput from '@/modules/common/components/CustomInput.vue'
-import CustomSelect from '@/modules/common/components/CustomSelect.vue'
-import CustomTextArea from '@/modules/common/components/CustomTextArea.vue'
-import { getProductById } from '@/modules/products/actions/get-product-by-id.action'
-import router from '@/router'
-import { useMutation, useQuery } from '@tanstack/vue-query'
+import CustomInput from '@/modules/common/components/CustomInput.vue';
+import CustomSelect from '@/modules/common/components/CustomSelect.vue';
+import CustomTextArea from '@/modules/common/components/CustomTextArea.vue';
+import {
+  getProductById,
+} from '@/modules/products/actions/get-product-by-id.action';
+import router from '@/router';
+import {
+  useMutation,
+  useQuery,
+} from '@tanstack/vue-query';
 
-import { updateProductAction } from '../../products/actions/create-update-product.action'
+import {
+  updateProductAction,
+} from '../../products/actions/create-update-product.action';
 
 const validationSchema = yup.object({
   title: yup.string().required().min(3),
@@ -135,6 +150,7 @@ export default defineComponent({
         resetForm({
           values: product.value
         })
+        imagesFile.value = []
       },
       {
         deep: true,
@@ -149,7 +165,7 @@ export default defineComponent({
       if (!value) return
 
       toast.success('¡Cambio en el producto realizado correctamente!')
-      router.replace(`admin/products/${updateProduct.value!.id}`)
+      router.replace(`/admin/products/${updateProduct.value!.id}`)
       //TODO: redirección cuando se crea
 
       resetForm({
