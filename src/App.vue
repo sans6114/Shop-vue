@@ -4,14 +4,15 @@
   <vue-query-devtools />
 </template>
 <script setup lang="ts">
-import { useRoute, useRouter } from 'vue-router'
+import {
+  useRoute,
+  useRouter,
+} from 'vue-router';
 
-import { VueQueryDevtools } from '@tanstack/vue-query-devtools'
+import { VueQueryDevtools } from '@tanstack/vue-query-devtools';
 
-import { AuthStatus } from './modules/auth/interfaces'
-import { useAuthStore } from './modules/auth/stores/auth.store'
-
-//import { Loader } from './modules/common/components'
+import { AuthStatus } from './modules/auth/interfaces';
+import { useAuthStore } from './modules/auth/stores/auth.store';
 
 const authStore = useAuthStore()
 

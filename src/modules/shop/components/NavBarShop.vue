@@ -58,7 +58,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { useAuthStore } from '../../auth/stores/auth.store'
 import { Logo } from '../icons'
 

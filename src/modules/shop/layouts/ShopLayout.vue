@@ -2,7 +2,7 @@
   <!-- component -->
 
   <!-- Header Navbar -->
-  <NavBar />
+  <NavBarShop />
 
   <!-- View of my page-->
   <router-view></router-view>
@@ -10,6 +10,7 @@
   <Footer />
 </template>
 
-<script setup>
-import { Footer, NavBar } from '../components'
+<script setup lang="ts">
+import { Footer } from '../components';
+import NavBarShop from '../components/NavBarShop.vue';
 </script>
